@@ -912,6 +912,23 @@ footer{background:var(--black);color:var(--white);padding:clamp(3.5rem,8vh,5.5re
 (function(){
   "use strict";
 
+  /* =====================================================================
+     SCROLL FIX — принудительный сброс скролла при обновлении страницы
+     ===================================================================== */
+  if ('scrollRestoration' in history) {
+    history.scrollRestoration = 'manual';
+  }
+
+  // Временно отключаем плавный скролл, чтобы не было долгой анимации снизу вверх
+  document.documentElement.style.scrollBehavior = 'auto';
+  window.scrollTo(0, 0);
+  
+  // Возвращаем плавный скролл через долю секунды, когда страница уже наверху
+  setTimeout(function() {
+    document.documentElement.style.scrollBehavior = 'smooth';
+  }, 100);
+  /* ===================================================================== */
+
   var reduce = false;
   try{ reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches; }catch(e){}
 
